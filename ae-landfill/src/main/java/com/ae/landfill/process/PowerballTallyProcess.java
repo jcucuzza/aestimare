@@ -25,9 +25,9 @@ public class PowerballTallyProcess {
     @PostConstruct
     public void init(){
         
-        powerballHistory = powerballWinningService.findAllWinningNumbers();
+        //powerballHistory = powerballWinningService.findAllDrawings();
         
-        logger.info("powerball history size {}", powerballHistory.size());
+        //logger.info("powerball history size {}", powerballHistory.size());
     }
 
     public Map<String, Map<Integer, Integer>>  getTallyBySum() {

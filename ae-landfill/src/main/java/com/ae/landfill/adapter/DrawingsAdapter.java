@@ -16,8 +16,8 @@ public class DrawingsAdapter {
     private JdbcTemplate jdbcTemplate;
 
     @Transactional(readOnly=true)
-    public List<PowerballWinningNumber> findAllWinningNumbers() {
-        return jdbcTemplate.query("select * from winning_numbers", new PowerballWinningNumberMapper());
+    public List<PowerballWinningNumber> findAllDrawings() {
+        return jdbcTemplate.query("select * from drawings", new PowerballWinningNumberMapper());
     }
 
     @Transactional

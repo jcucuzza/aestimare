@@ -4,19 +4,19 @@ services:
 
   kafka-zoo1:
     extends:
-      file: services/kafka/kafka-zoo1.yaml
+      file: ae-services/kafka/kafka-zoo1.yaml
       service: kafka-zoo1
   kafka-zoo2:
     extends:
-      file: services/kafka/kafka-zoo2.yaml
+      file: ae-services/kafka/kafka-zoo2.yaml
       service: kafka-zoo2
   kafka-zoo3:
     extends:
-      file: services/kafka/kafka-zoo3.yaml
+      file: ae-services/kafka/kafka-zoo3.yaml
       service: kafka-zoo3
   kafka: 
     extends: 
-      file: services/kafka/kafka.yaml
+      file: ae-services/kafka/kafka.yaml
       service: kafka
     depends_on:
       - kafka-zoo1
@@ -34,5 +34,5 @@ services:
 
   postgres: 
     extends: 
-      file: services/postgres.yaml
+      file: ae-services/postgres.yaml
       service: postgres
