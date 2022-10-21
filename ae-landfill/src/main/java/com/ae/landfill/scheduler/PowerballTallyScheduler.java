@@ -1,7 +1,6 @@
 package com.ae.landfill.scheduler;
 
-import com.ae.landfill.process.PowerballTallyProcess;
-import com.ae.landfill.adapter.DrawingsAdapter;
+import com.ae.landfill.adapter.DrawingsSQLAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ public class PowerballTallyScheduler {
     PowerballTallyProcess powerballTallyProcess;
 
     @Autowired
-    DrawingsAdapter powerballWinningService;
+    DrawingsSQLAdapter powerballWinningService;
 
     public static final Logger logger = LoggerFactory.getLogger(PowerballTallyScheduler.class);
 
@@ -24,12 +23,11 @@ public class PowerballTallyScheduler {
     @Scheduled(cron = "0 0/2 * 1/1 * ? *")
     public void cronJobSchTallyBySum() {
 
-        if(powerballWinningService.insertToTallyAllSumTable(powerballTallyProcess.getTallyBySum()))
-            logger.info("tallySumAll updated");
-        else
-            logger.info("tallySumAll not updated!");
+//        if(powerballWinningService.insertToTallyAllSumTable(powerballTallyProcess.getTallyBySum()))
+//            logger.info("tallySumAll updated");
+//        else
+//            logger.info("tallySumAll not updated!");
     }
-
 
 
 }

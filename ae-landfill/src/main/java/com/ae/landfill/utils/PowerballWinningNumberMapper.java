@@ -1,6 +1,5 @@
 package com.ae.landfill.utils;
 
-import com.ae.landfill.model.PowerballWinningNumber;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

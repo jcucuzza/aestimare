@@ -24,7 +24,7 @@ services:
       - kafka-zoo3
   kafka-ui:
     extends:
-      file: services/kafka/kafka-ui.yaml
+      file: ae-services/kafka/kafka-ui.yaml
       service: kafka-ui
     depends_on:
       - kafka-zoo1
