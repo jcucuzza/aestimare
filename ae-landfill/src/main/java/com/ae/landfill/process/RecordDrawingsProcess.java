@@ -14,6 +14,6 @@ public class RecordDrawingsProcess {
     @EventListener(ApplicationReadyEvent.class)
     public void postConstruct(){
         logger.info("Started initializing record process");
-        
+
     }
 }
