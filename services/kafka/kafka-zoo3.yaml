@@ -1,0 +1,12 @@
+version: "2.1"
+services:
+  kafka-zoo3:
+    image: confluentinc/cp-zookeeper:$KAFKA_VERSION
+    hostname: kafka-zoo3
+    container_name: kafka-zoo3-$KAFKA_VERSION
+    ports:
+      - "2183:2183"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2183
+      ZOOKEEPER_SERVER_ID: 3
+      ZOOKEEPER_SERVERS: kafka-zoo1:2888:3888;kafka-zoo2:2888:3888;kafka-zoo3:2888:3888
