@@ -31,7 +31,7 @@ dependencies {
 	testImplementation("org.springframework.kafka:spring-kafka-test")
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 tasks.withType<JavaCompile>() {
 	options.encoding = "UTF-8"
