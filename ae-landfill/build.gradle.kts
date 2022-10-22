@@ -1,6 +1,6 @@
 val group: String by project
 val artifact: String by project
-val build_version: String by project
+val version: String by project
 
 plugins {
 	java
@@ -26,7 +26,9 @@ dependencies {
 	testCompileOnly("org.projectlombok:lombok:1.18.24")
 
 	testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
-	
+
+	testImplementation(platform("org.junit:junit-bom:5.9.1"))
+	testImplementation("org.junit.jupiter:junit-jupiter")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.kafka:spring-kafka-test")
 }
@@ -35,6 +37,10 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 tasks.withType<JavaCompile>() {
 	options.encoding = "UTF-8"
+}
+
+tasks.withType<Test>().configureEach {
+	useJUnitPlatform()
 }
 
 springBoot {
