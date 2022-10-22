@@ -1,6 +1,7 @@
 package com.ae.landfill.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,6 +15,7 @@ import java.util.TimeZone;
 
 @Getter @Setter
 @ToString
+@EqualsAndHashCode
 public class Drawing {
     @JsonProperty(value = "draw_date")
     private String drawDate;

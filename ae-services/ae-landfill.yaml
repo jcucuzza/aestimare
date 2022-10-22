@@ -1,0 +1,12 @@
+--- 
+version: "2.4"
+services: 
+  ae-landfill:
+    user: root
+    build: ../ae-landfill
+    container_name: ae-landfill
+    environment:
+      spring.datasource.url: jdbc:postgresql://postgres:5432/ae
+    ports: 
+     - "8100:8100"
+      

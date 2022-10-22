@@ -36,3 +36,14 @@ services:
     extends: 
       file: ae-services/postgres.yaml
       service: postgres
+
+  ae-landfill:
+    extends:
+      file: ae-services/ae-landfill.yaml
+      service: ae-landfill
+    depends_on:
+      - kafka-zoo1
+      - kafka-zoo2
+      - kafka-zoo3
+      - kafka
+      - postgres

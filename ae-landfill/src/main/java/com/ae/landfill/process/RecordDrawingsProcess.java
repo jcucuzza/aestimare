@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,15 +33,17 @@ public class RecordDrawingsProcess {
         if(invoke())
             logger.info("Successfully Recorded Drawings");
         else
-            logger.info("Unsuccessfully Recorded Drawings");
+            logger.warn("Unsuccessfully Recorded Drawings");
     }
 
     public Boolean invoke() {
         Boolean success = true;
-        List<Drawing> currentDrawings = dataGovAPIAdapter.getDrawings();
-        List<Drawing> previousDrawings = drawingsSQLAdapter.getDrawings();
 
-        if(!populateDrawingsTable(getDistinctDrawings(currentDrawings, previousDrawings))) {
+        List<Drawing> distinctDrawings = getDistinctDrawings();
+        if(distinctDrawings.isEmpty())
+            logger.error("No new drawings were retrieved");
+
+        if(!populateDrawingsTable(distinctDrawings)) {
             logger.error("Unable to populate drawings into drawings table");
             success = false;
         }
@@ -48,24 +51,26 @@ public class RecordDrawingsProcess {
         return success;
     }
 
-    private List<Drawing> getDistinctDrawings(List<Drawing> currentDrawings, List<Drawing> previousDrawings) {
-        List<Drawing> distinctDrawings = null;
+    protected List<Drawing> getDistinctDrawings() {
+        List<Drawing> currentDrawings = dataGovAPIAdapter.getDrawings();
+        List<Drawing> previousDrawings = drawingsSQLAdapter.getDrawings();
 
         if(currentDrawings.size() > 1) {
-            distinctDrawings = currentDrawings.stream()
+            currentDrawings = currentDrawings.stream()
                     .filter(currentDrawing -> !previousDrawings.contains(currentDrawing))
                     .collect(Collectors.toList());
         } else {
             logger.error("Was unable to pull current drawings, received {} results", currentDrawings.size());
         }
-        return distinctDrawings;
+
+        return currentDrawings;
     }
 
     private Boolean populateDrawingsTable(List<Drawing> distinctDrawings) {
        Boolean inserted = false;
         for(Drawing drawing : distinctDrawings) {
             try {
-                int rows = drawingsSQLAdapter.insertDrawing(drawing);
+                int rows= drawingsSQLAdapter.insertDrawing(drawing);
                 if(rows > 0) {
                     inserted= true;
                 }

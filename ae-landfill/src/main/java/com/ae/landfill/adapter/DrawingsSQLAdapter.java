@@ -32,6 +32,16 @@ public class DrawingsSQLAdapter {
         return jdbcTemplate.update(SQL, d.getDrawDate(), d.getEpochTime(), d.getWinningNumbers(), d.getMultiplier());
     }
 
+    public Drawing getLatestDrawing(){
+        final String SQL = "select * from drawings order by draw_date desc limit 1";
+        return jdbcTemplate.query(SQL, new DrawingsMapper()).get(0);
+    }
+
+    public Integer getCount() {
+        final String SQL = "select count(*) from drawings";
+        return jdbcTemplate.queryForObject(SQL, Integer.class);
+    }
+
     public static class DrawingsMapper  implements RowMapper<Drawing> {
         @Override
         public Drawing mapRow(ResultSet rs, int rowNum) throws SQLException {
