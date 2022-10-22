@@ -22,25 +22,34 @@ public class DrawingsSQLAdapter {
 
     public static final Logger logger = LoggerFactory.getLogger(DrawingsSQLAdapter.class);
 
+    @Transactional(readOnly = true)
+    public Integer getCount() {
+        final String SQL = "select count(*) from drawings";
+        return jdbcTemplate.queryForObject(SQL, Integer.class);
+    }
+
     @Transactional(readOnly=true)
     public List<Drawing> getDrawings() {
-        return jdbcTemplate.query("select * from drawings", new DrawingsMapper());
+        final String SQL = "select * from drawings";
+        return jdbcTemplate.query(SQL, new DrawingsMapper());
     }
 
-    public Integer insertDrawing(Drawing d) throws DataAccessException, ParseException {
-        final String SQL = "insert into drawings(draw_date, draw_date_epoch, winning_numbers, multiplier) values (?:: TIMESTAMP, ?, ?, CAST(? AS INT))";
-        return jdbcTemplate.update(SQL, d.getDrawDate(), d.getEpochTime(), d.getWinningNumbers(), d.getMultiplier());
-    }
 
+    @Transactional(readOnly = true)
     public Drawing getLatestDrawing(){
         final String SQL = "select * from drawings order by draw_date desc limit 1";
         return jdbcTemplate.query(SQL, new DrawingsMapper()).get(0);
     }
 
-    public Integer getCount() {
-        final String SQL = "select count(*) from drawings";
-        return jdbcTemplate.queryForObject(SQL, Integer.class);
+    @Transactional
+    public Integer insertDrawing(Drawing d) throws DataAccessException, ParseException {
+        final String SQL = "insert into drawings(draw_date, draw_date_epoch, winning_numbers, multiplier) values (?:: TIMESTAMP, ?, ?, CAST(? AS INT))";
+        return jdbcTemplate.update(SQL, d.getDrawDate(), d.getEpochTime(), d.getWinningNumbers(), d.getMultiplier());
     }
+
+
+
+
 
     public static class DrawingsMapper  implements RowMapper<Drawing> {
         @Override

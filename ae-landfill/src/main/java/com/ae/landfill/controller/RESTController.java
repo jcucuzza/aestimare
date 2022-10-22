@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping(path = "/")
@@ -15,22 +17,28 @@ public class RESTController {
     @Autowired
     DrawingsSQLAdapter drawingsSQLAdapter;
 
-    @GetMapping(path = "/health", produces = "application/json")
+    private static final String APPLICATION_JSON = "application/json";
+    @GetMapping(path = "/health", produces = APPLICATION_JSON)
     public boolean health() {
         return true;
     }
 
-    @GetMapping(path = "/count", produces = "application/json")
+    @GetMapping(path = "/count", produces = APPLICATION_JSON)
     public int  count() {
         return drawingsSQLAdapter.getCount();
     }
 
-    @GetMapping(path = "/between-dates", produces = "application/json")
+    @GetMapping(path = "/drawings", produces = APPLICATION_JSON)
+    public List<Drawing> getDrawings() {
+        return drawingsSQLAdapter.getDrawings();
+    }
+
+    @GetMapping(path = "/between-dates", produces = APPLICATION_JSON)
     public String  betweenDates() {
         return "";
     }
 
-    @GetMapping(path = "/latest-drawing", produces = "application/json")
+    @GetMapping(path = "/latest-drawing", produces = APPLICATION_JSON)
     public Drawing latestDrawing() {
         return drawingsSQLAdapter.getLatestDrawing();
     }
